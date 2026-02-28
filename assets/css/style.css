@@ -1,0 +1,22 @@
+body {
+    background: linear-gradient(to bottom, #6ec1e4, #d9f1ff);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+canvas {
+    background: linear-gradient(to bottom, #87CEEB, #ffffff);
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.card {
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: scale(1.02);
+}
+
+footer {
+    margin-top: 50px;
+}
