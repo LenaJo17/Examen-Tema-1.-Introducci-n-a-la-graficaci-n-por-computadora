@@ -1,60 +1,61 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Flor Vitral - Canvas App</title>
+    <meta charset="UTF-8">
+    <title>Flor Vitral - Canvas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Favicon -->
-<link rel="icon" type="image/png" href="assets/img/favicon.png">
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<!-- Bootstrap 5 -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="assets/css/styles.css">
 
-<!-- CSS personalizado -->
-<link rel="stylesheet" href="assets/css/styles.css">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/img/favicon.png">
 </head>
 
 <body>
 
 <!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
-  <div class="container">
-    <span class="navbar-brand">Flor Vitral - Canvas</span>
-    <span class="navbar-text text-light">
-      Jolette Ochoa
-    </span>
-  </div>
+<nav class="navbar navbar-dark bg-dark shadow">
+    <div class="container">
+        <span class="navbar-brand fw-bold">Flor Vitral - Canvas API</span>
+        <span class="text-light">Jolette Ochoa</span>
+    </div>
 </nav>
 
 <!-- CONTENIDO -->
 <div class="container my-5">
-  <div class="row g-4">
+    <div class="row justify-content-center align-items-center">
 
-    <!-- IZQUIERDA - CANVAS -->
-    <div class="col-md-6">
-      <div class="card shadow-lg p-3">
-        <h5 class="text-center mb-3">Imagen Dibujada (Canvas)</h5>
-        <canvas id="canvas" width="500" height="600"></canvas>
-      </div>
+        <!-- IZQUIERDA - DIBUJO -->
+        <div class="col-md-6 text-center">
+            <h5 class="mb-3">Imagen Dibujada por Programación</h5>
+            <canvas id="c" width="500" height="600" class="shadow-lg rounded bg-white"></canvas>
+        </div>
+
+        <!-- DERECHA - ORIGINAL -->
+        <div class="col-md-6 text-center">
+            <h5 class="mb-3">Imagen Original</h5>
+            <img src="assets/img/imagen.jpg"
+                 width="500"
+                 height="600"
+                 class="shadow-lg rounded"
+                 alt="Imagen Original">
+        </div>
+
     </div>
-
-    <!-- DERECHA - IMAGEN ORIGINAL -->
-    <div class="col-md-6">
-      <div class="card shadow-lg p-3">
-        <h5 class="text-center mb-3">Imagen Original</h5>
-        <img src="assets/img/imagen.jpg" class="img-fluid rounded" alt="Imagen original">
-      </div>
-    </div>
-
-  </div>
 </div>
 
 <!-- FOOTER -->
-<footer class="bg-dark text-white text-center py-3 mt-5">
-  <p class="mb-0">Aplicación desarrollada por Jolette Ochoa | Canvas API | 2026</p>
+<footer class="bg-dark text-light text-center p-3 mt-5">
+    © 2026 | Desarrollado por <strong>Jolette Ochoa</strong><br>
+    Examen práctico - HTML, JS y Bootstrap
 </footer>
 
+<!-- JS -->
 <script src="assets/js/main.js"></script>
+
 </body>
 </html>

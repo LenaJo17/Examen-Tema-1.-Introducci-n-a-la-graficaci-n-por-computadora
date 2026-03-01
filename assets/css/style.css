@@ -1,17 +1,28 @@
+/* ============================================================
+   Aplicación: Flor Vitral - Canvas API
+   Autor: Jolette Ochoa
+   Descripción: Estilos generales
+============================================================ */
+
 body {
-    background: linear-gradient(135deg, #f8f9fa, #dbeafe);
+    background: linear-gradient(135deg, #f3e8ff, #ffe4f2);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+h5 {
+    font-weight: 600;
+    color: #333;
+}
+
+canvas, img {
+    width: 500px;
+    height: 600px;
 }
 
 canvas {
-    display: block;
-    margin: auto;
-    background-color: white;
+    transition: transform 0.3s ease;
 }
 
-.card {
-    border-radius: 15px;
-}
-
-footer {
-    font-size: 14px;
+canvas:hover {
+    transform: scale(1.02);
 }
