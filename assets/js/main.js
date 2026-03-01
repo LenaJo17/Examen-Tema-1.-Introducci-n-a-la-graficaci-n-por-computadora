@@ -1,119 +1,227 @@
 /**
- * ============================================================
- *  Aplicación: CodeOrca Canvas App
- *  Autor: Jolette Ochoa
- *  Materia: Programación Web
- *  Tema: HTML5 Canvas API
- *  Fecha: 2026
- *  
- *  Descripción:
- *  Aplicación que replica una imagen de un delfín
- *  utilizando la API de Canvas de HTML5.
- *  El código está organizado por figuras.
- * ============================================================
+ * ==========================================================
+ * Aplicación: Flor Vitral con Canvas API
+ * Autor: Jolette Ochoa
+ * Fecha: 2026
+ * Descripción:
+ * Aplicación web que recrea una imagen estilo vitral
+ * utilizando la API Canvas de HTML5.
+ *
+ * Se emplean:
+ * - Rectángulos (rect)
+ * - Elipses (ellipse)
+ * - Arcos (arc)
+ * - Curvas Bézier (bezierCurveTo)
+ * - Recortes (clip)
+ * - Transformaciones (translate, rotate, scale)
+ * - Composición global (globalCompositeOperation)
+ *
+ * La imagen original se muestra a la derecha,
+ * y la imagen generada por programación a la izquierda.
+ * ==========================================================
  */
 
-window.onload = function () {
-    const canvas = document.getElementById("canvas");
-    const ctx = canvas.getContext("2d");
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
 
-    drawBackground(ctx);
-    drawClouds(ctx);
-    drawDolphinBody(ctx);
-    drawDolphinDetails(ctx);
-    drawSplash(ctx);
-};
+/* ============================
+   CONFIGURACIÓN GENERAL
+============================ */
 
-/* ===============================
-   FONDO
-=================================*/
-function drawBackground(ctx) {
-    let gradient = ctx.createLinearGradient(0, 0, 0, 500);
-    gradient.addColorStop(0, "#6ec1e4");
-    gradient.addColorStop(1, "#ffffff");
+const cx = 210;
+const cy = 180;
+const STROKE = '#1a1a1a';
+const SW = 1.8;
 
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, 500, 500);
+const sw = 24;
+const segH = sw;
+const totalSegs = 10;
+
+const PINK = '#e8b4d0';
+const PURPLE = '#b89ece';
+const INNER_COL = '#c0307a';
+
+const PETAL_OFFSET = 52;
+const PETAL_RX = 50;
+const PETAL_RY = 88;
+const CIRC_DIST = 28;
+const CIRC_R = 48;
+
+const angles = Array.from({ length: 5 }, (_, i) =>
+  (i / 5) * Math.PI * 2 - Math.PI / 2
+);
+
+/* ============================
+   FIGURA 1: TALLO SEGMENTADO
+============================ */
+
+function drawStem() {
+
+  const stemTop = cy + 20;
+  const stemBot = stemTop + totalSegs * segH;
+
+  ctx.fillStyle = '#4a9c3e';
+  ctx.strokeStyle = STROKE;
+  ctx.lineWidth = SW;
+
+  ctx.beginPath();
+  ctx.rect(cx - sw / 2, stemTop, sw, totalSegs * segH);
+  ctx.fill();
+  ctx.stroke();
+
+  // Líneas horizontales
+  for (let i = 1; i < totalSegs; i++) {
+    const y = stemTop + i * segH;
+    ctx.beginPath();
+    ctx.moveTo(cx - sw / 2, y);
+    ctx.lineTo(cx + sw / 2, y);
+    ctx.stroke();
+  }
+
+  // Líneas diagonales vitral
+  const L1 = stemTop + segH;
+  const L2 = stemTop + segH * 2;
+  const L3 = stemTop + segH * 3;
+
+  ctx.beginPath();
+  ctx.moveTo(cx + sw / 2, L1);
+  ctx.lineTo(cx - sw / 2, L2);
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.moveTo(cx - sw / 2, L2);
+  ctx.lineTo(cx + sw / 2, L3);
+  ctx.stroke();
 }
 
-/* ===============================
-   NUBES
-=================================*/
-function drawClouds(ctx) {
-    ctx.fillStyle = "rgba(255,255,255,0.7)";
+/* ============================
+   FIGURA 2: HOJAS (BÉZIER)
+============================ */
 
-    ctx.beginPath();
-    ctx.arc(200, 120, 60, 0, Math.PI * 2);
-    ctx.arc(260, 120, 50, 0, Math.PI * 2);
-    ctx.arc(150, 120, 50, 0, Math.PI * 2);
-    ctx.fill();
+function drawLeaf(flip) {
+
+  const leafY = cy + 20 + (totalSegs * segH) * 0.80;
+  const lw = 90;
+  const lh = 32;
+
+  ctx.save();
+  ctx.translate(cx + (flip ? sw / 2 : -sw / 2), leafY);
+  ctx.scale(flip ? 1 : -1, 1);
+  ctx.rotate(18 * Math.PI / 180);
+
+  ctx.beginPath();
+  ctx.moveTo(0, 0);
+  ctx.bezierCurveTo(lw * 0.25, -lh, lw * 0.75, -lh, lw, 0);
+  ctx.bezierCurveTo(lw * 0.75, lh, lw * 0.25, lh, 0, 0);
+  ctx.closePath();
+
+  ctx.fillStyle = '#4a9c3e';
+  ctx.fill();
+  ctx.strokeStyle = STROKE;
+  ctx.lineWidth = SW;
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.moveTo(2, 0);
+  ctx.lineTo(lw - 2, 0);
+  ctx.stroke();
+
+  ctx.restore();
 }
 
-/* ===============================
-   CUERPO DEL DELFÍN
-=================================*/
-function drawDolphinBody(ctx) {
+/* ============================
+   FIGURA 3: PÉTALOS MITAD COLOR
+============================ */
 
-    let gradient = ctx.createLinearGradient(100, 200, 400, 300);
-    gradient.addColorStop(0, "#0099cc");
-    gradient.addColorStop(1, "#66ffff");
+function drawPetalsBase() {
 
-    ctx.fillStyle = gradient;
+  angles.forEach(angle => {
 
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(angle);
+
+    // Mitad rosa
+    ctx.save();
     ctx.beginPath();
-    ctx.ellipse(260, 270, 150, 70, -0.5, 0, Math.PI * 2);
-    ctx.fill();
+    ctx.ellipse(0, -PETAL_OFFSET, PETAL_RX, PETAL_RY, 0, 0, Math.PI * 2);
+    ctx.clip();
+    ctx.fillStyle = PINK;
+    ctx.fillRect(-PETAL_RX - 2, -PETAL_OFFSET - PETAL_RY, PETAL_RX, PETAL_RY * 2);
+    ctx.restore();
 
-    // Cola
+    // Mitad morado
+    ctx.save();
     ctx.beginPath();
-    ctx.moveTo(120, 260);
-    ctx.lineTo(70, 220);
-    ctx.lineTo(70, 300);
-    ctx.closePath();
-    ctx.fill();
+    ctx.ellipse(0, -PETAL_OFFSET, PETAL_RX, PETAL_RY, 0, 0, Math.PI * 2);
+    ctx.clip();
+    ctx.fillStyle = PURPLE;
+    ctx.fillRect(0, -PETAL_OFFSET - PETAL_RY, PETAL_RX, PETAL_RY * 2);
+    ctx.restore();
+
+    ctx.restore();
+  });
 }
 
-/* ===============================
-   DETALLES DEL DELFÍN
-=================================*/
-function drawDolphinDetails(ctx) {
+/* ============================
+   FIGURA 4: CÍRCULOS CENTRALES
+============================ */
 
-    // Ojo
-    ctx.fillStyle = "white";
+function drawInnerCircles() {
+
+  angles.forEach(angle => {
+
+    const x = cx + Math.cos(angle) * CIRC_DIST;
+    const y = cy + Math.sin(angle) * CIRC_DIST;
+
     ctx.beginPath();
-    ctx.arc(350, 250, 15, 0, Math.PI * 2);
+    ctx.arc(x, y, CIRC_R, 0, Math.PI * 2);
+    ctx.fillStyle = INNER_COL;
     ctx.fill();
 
-    ctx.fillStyle = "black";
-    ctx.beginPath();
-    ctx.arc(355, 250, 7, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Aleta
-    ctx.fillStyle = "#0077aa";
-    ctx.beginPath();
-    ctx.moveTo(260, 270);
-    ctx.lineTo(240, 330);
-    ctx.lineTo(290, 300);
-    ctx.closePath();
-    ctx.fill();
+    ctx.strokeStyle = STROKE;
+    ctx.lineWidth = SW;
+    ctx.stroke();
+  });
 }
 
-/* ===============================
-   SALPICADURA
-=================================*/
-function drawSplash(ctx) {
-    ctx.fillStyle = "#00bfff";
+/* ============================
+   FIGURA 5: BORDES PÉTALOS
+============================ */
+
+function drawPetalBorders() {
+
+  angles.forEach(angle => {
+
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(angle);
 
     ctx.beginPath();
-    ctx.arc(260, 380, 25, 0, Math.PI * 2);
-    ctx.fill();
+    ctx.ellipse(0, -PETAL_OFFSET, PETAL_RX, PETAL_RY, 0, 0, Math.PI * 2);
+    ctx.strokeStyle = STROKE;
+    ctx.lineWidth = SW;
+    ctx.stroke();
 
-    ctx.beginPath();
-    ctx.arc(230, 350, 15, 0, Math.PI * 2);
-    ctx.fill();
-
-    ctx.beginPath();
-    ctx.arc(290, 350, 15, 0, Math.PI * 2);
-    ctx.fill();
+    ctx.restore();
+  });
 }
+
+/* ============================
+   RENDER PRINCIPAL
+============================ */
+
+function draw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  drawStem();
+  drawLeaf(false);
+  drawLeaf(true);
+  drawPetalsBase();
+  drawInnerCircles();
+  drawPetalBorders();
+}
+
+draw();
