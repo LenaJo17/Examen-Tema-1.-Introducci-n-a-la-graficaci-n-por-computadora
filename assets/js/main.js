@@ -1,8 +1,11 @@
 /**
- * ============================================================
- * Proyecto: Flor Vitral - VERSIÓN FINAL CORREGIDA
- * Ajuste: Hojas naciendo exactamente desde la orilla del tallo
- * ============================================================
+ * ==========================================================
+ * Autor: TAPIA OCHOA ELENA JOLETTE
+ * Materia: Graficación 
+ * Tema: Introducción a la graficación por computadora
+ * Descripción: Dibujo de una flor vitral utilizando Canvas 2D
+ * Fecha: Marzo 2026
+ * ==========================================================
  */
 
 window.onload = function () {

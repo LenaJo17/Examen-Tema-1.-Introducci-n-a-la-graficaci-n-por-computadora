@@ -8,20 +8,82 @@
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+
     <!-- Estilos personalizados -->
     <link rel="stylesheet" href="assets/css/styles.css">
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="assets/img/favicon.png">
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #f9e4f0 0%, #ede0f7 30%, #d9eef3 65%, #e8f5e0 100%);
+            background-attachment: fixed;
+            font-family: 'Lato', sans-serif;
+        }
+
+        nav.navbar {
+            background: linear-gradient(135deg, #2d1a2e, #6b3080, #c0307a) !important;
+            border-bottom: 3px solid #e8a8cc;
+        }
+
+        .navbar-brand {
+            font-family: 'Playfair Display', serif !important;
+            font-size: 1.3rem;
+        }
+
+        h5 {
+            font-family: 'Playfair Display', serif;
+            background: linear-gradient(90deg, #c0307a, #b989e3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 1.1rem;
+        }
+
+        .card-custom {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 1.2rem;
+            box-shadow: 0 8px 32px rgba(192, 48, 122, 0.12);
+            border: 1.5px solid rgba(192, 48, 122, 0.12);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-custom::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #eaa8cc, #b989e3, #c0307a);
+        }
+
+        footer {
+            background: linear-gradient(135deg, #2d1a2e, #6b3080) !important;
+            border-top: 3px solid #e8a8cc;
+            font-family: 'Lato', sans-serif;
+            font-weight: 300;
+        }
+
+        footer strong {
+            color: #e8a8cc;
+        }
+    </style>
 </head>
 
 <body>
 
 <!-- NAVBAR -->
-<nav class="navbar navbar-dark bg-dark shadow">
+<nav class="navbar navbar-dark shadow">
     <div class="container">
-        <span class="navbar-brand fw-bold">Flor Vitral - Canvas API</span>
-        <span class="text-light">Jolette Ochoa</span>
+        <span class="navbar-brand fw-bold">🌸 Flor Vitral - Canvas API</span>
+        <span class="text-light"> Jolette Ochoa | Graficación </span>
     </div>
 </nav>
 
@@ -31,31 +93,32 @@
 
         <!-- IZQUIERDA - DIBUJO -->
         <div class="col-md-6 mb-4">
-    <div class="card-custom text-center">
-            <h5 class="mb-3">Imagen Dibujada por Programación</h5>
-            <canvas id="c" width="500" height="600" class="shadow-lg rounded bg-white"></canvas>
-        </div>
+            <div class="card-custom text-center">
+                <h5 class="mb-3">🌺 Imagen Dibujada por Programación</h5>
+                <canvas id="c" width="500" height="600" class="shadow-lg rounded bg-white"></canvas>
+            </div>
         </div>
 
         <!-- DERECHA - ORIGINAL -->
         <div class="col-md-6 mb-4">
-    <div class="card-custom text-center">
-            <h5 class="mb-3">Imagen Original</h5>
-            <img src="assets/img/imagen.jpg"
-                 width="500"
-                 height="600"
-                 class="shadow-lg rounded"
-                 alt="Imagen Original">
-        </div>
+            <div class="card-custom text-center">
+                <h5 class="mb-3">🖼️ Imagen Original</h5>
+                <img src="assets/img/imagen.jpg"
+                     width="500"
+                     height="600"
+                     class="shadow-lg rounded"
+                     alt="Imagen Original de referencia">
+            </div>
         </div>
 
     </div>
 </div>
 
 <!-- FOOTER -->
-<footer class="bg-dark text-light text-center p-3 mt-5">
+<footer class="text-light text-center p-3 mt-5">
     © 2026 | Desarrollado por <strong>Jolette Ochoa</strong><br>
-    Examen práctico - HTML, JS y Bootstrap
+    Materia: Graficación<br>
+    Examen Tema 1
 </footer>
 
 <!-- JS -->
