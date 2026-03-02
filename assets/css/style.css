@@ -1,22 +1,147 @@
+/* ============================================================
+   Flor Vitral - Estilos
+   Autora: Jolette Ochoa
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400&display=swap');
+
+/* ── Variables ── */
+:root {
+  --pink:       #e8a8cc;
+  --purple:     #b989e3;
+  --dark-pink:  #c0307a;
+  --green:      #82BD65;
+  --bg:         #fdf6f9;
+  --card-bg:    #ffffff;
+  --text:       #2d1a2e;
+  --shadow:     0 8px 32px rgba(192, 48, 122, 0.12);
+}
+
+/* ── Reset & Base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
 body {
-  background-color: #f8f9fa;
-  font-family: Arial, sans-serif;
-  text-align: center;
+  background: linear-gradient(135deg,
+    #992a69 0%,
+    #ede0f7 25%,
+    #d9eef3 50%,
+    #e8f5e0 75%,
+    #fde8f0 100%);
+  background-attachment: fixed;
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  color: var(--text);
+  min-height: 100vh;
 }
 
-.contenedor {
-  display: flex;
-  justify-content: center;
-  gap: 40px;
-  margin-top: 20px;
+/* ── Navbar ── */
+.navbar {
+  background: linear-gradient(135deg, #2d1a2e 0%, #5a2d6e 60%, #c0307a 100%) !important;
+  padding: 1rem 0;
+  border-bottom: 3px solid var(--pink);
 }
 
-.lado {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.navbar-brand {
+  font-family: 'Playfair Display', serif !important;
+  font-size: 1.4rem !important;
+  letter-spacing: 0.04em;
+  color: #fff !important;
 }
 
-canvas, img {
-  border: 2px solid #333;
+.navbar .text-light {
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  font-size: 0.85rem;
+  opacity: 0.85;
+}
+
+/* ── Títulos de sección ── */
+.gradient-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, var(--dark-pink), var(--purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 0.03em;
+  margin-bottom: 1rem !important;
+}
+
+/* ── Cards ── */
+.card-custom {
+  background: var(--card-bg);
+  border-radius: 20px;
+  padding: 1.5rem 1rem 1rem;
+  box-shadow: var(--shadow);
+  border: 1.5px solid rgba(192, 48, 122, 0.10);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-custom::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--pink), var(--purple), var(--dark-pink));
+  border-radius: 20px 20px 0 0;
+}
+
+.card-custom:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(192, 48, 122, 0.18);
+}
+
+/* ── Canvas e imagen ── */
+#c, .img-original {
+  width: 100%;
+  max-width: 450px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border-radius: 12px;
+  border: none !important;
+  box-shadow: 0 4px 20px rgba(45, 26, 46, 0.10);
+}
+
+/* ── Etiqueta decorativa ── */
+.badge-vitral {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--dark-pink), var(--purple));
+  color: #fff;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.8rem;
+  border-radius: 20px;
+  margin-bottom: 0.75rem;
+}
+
+/* ── Footer ── */
+footer {
+  background: linear-gradient(135deg, #2d1a2e, #5a2d6e) !important;
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  border-top: 3px solid var(--pink);
+}
+
+footer strong {
+  font-weight: 700;
+  color: var(--pink);
+}
+
+/* ── Separador decorativo ── */
+.divider {
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--pink), var(--purple));
+  border-radius: 2px;
+  margin: 0 auto 1.2rem;
 }

@@ -8,9 +8,6 @@
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Animate.css para animaciones -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-
     <!-- Estilos personalizados -->
     <link rel="stylesheet" href="assets/css/styles.css">
 
@@ -21,35 +18,35 @@
 <body>
 
 <!-- NAVBAR -->
-<nav class="navbar navbar-dark shadow-lg">
-    <div class="container d-flex justify-content-between align-items-center">
-        <span class="navbar-brand fw-bold display-6">🌸 Flor Vitral - Canvas API</span>
-        <span class="text-light fw-semibold">Jolette Ochoa</span>
+<nav class="navbar navbar-dark bg-dark shadow">
+    <div class="container">
+        <span class="navbar-brand fw-bold">Flor Vitral - Canvas API</span>
+        <span class="text-light">Jolette Ochoa</span>
     </div>
 </nav>
 
 <!-- CONTENIDO -->
 <div class="container my-5">
-    <div class="row justify-content-center align-items-start g-4">
+    <div class="row justify-content-center align-items-center">
 
         <!-- IZQUIERDA - DIBUJO -->
         <div class="col-md-6 mb-4">
-            <div class="card-custom text-center animate__animated animate__fadeInLeft">
-                <h5 class="mb-3 gradient-title">🌺 Imagen Dibujada por Programación</h5>
-                <canvas id="c" width="500" height="600" class="shadow-lg rounded bg-white"></canvas>
-            </div>
+    <div class="card-custom text-center">
+            <h5 class="mb-3">Imagen Dibujada por Programación</h5>
+            <canvas id="c" width="500" height="600" class="shadow-lg rounded bg-white"></canvas>
+        </div>
         </div>
 
         <!-- DERECHA - ORIGINAL -->
         <div class="col-md-6 mb-4">
-            <div class="card-custom text-center animate__animated animate__fadeInRight">
-                <h5 class="mb-3 gradient-title">🖼️ Imagen Original</h5>
-                <img src="assets/img/imagen.jpg"
-                     width="500"
-                     height="600"
-                     class="shadow-lg rounded"
-                     alt="Imagen Original">
-            </div>
+    <div class="card-custom text-center">
+            <h5 class="mb-3">Imagen Original</h5>
+            <img src="assets/img/imagen.jpg"
+                 width="500"
+                 height="600"
+                 class="shadow-lg rounded"
+                 alt="Imagen Original">
+        </div>
         </div>
 
     </div>
