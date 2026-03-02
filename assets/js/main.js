@@ -9,6 +9,11 @@
  */
 
 window.onload = function () {
+
+  // ==================================================
+  // CONFIGURACIÓN GENERAL DEL CANVAS
+  // ==================================================
+
   const canvas = document.getElementById('c');
   const ctx = canvas.getContext('2d');
 
@@ -44,14 +49,17 @@ window.onload = function () {
   let STEM_W;
   let leafCalculatedY = 0;
 
-  /* --- TALLO --- */
+  // ==================================================
+  // TALLO
+  // ==================================================
+
   function drawStem() {
     const nSegs = 9;
     const w = 40 * SCALE;
     let yCurrent = cy + (-10 * SCALE);
     const normalH = 48 * SCALE;
     STEM_W = w;
-    
+
     ctx.fillStyle = COLORS.STEM;
     ctx.strokeStyle = STROKE;
     ctx.lineWidth = 2 * SCALE;
@@ -60,7 +68,7 @@ window.onload = function () {
       let h = (i >= 6) ? normalH * 1.40 : normalH;
       let yTop = yCurrent;
       let yBottom = yCurrent + h;
-      
+
       ctx.beginPath();
       ctx.rect(cx - w / 2, yTop, w, h);
       ctx.fill();
@@ -77,125 +85,160 @@ window.onload = function () {
     }
   }
 
-  /* --- HOJAS (CORREGIDO EL NACIMIENTO) --- */
+  // ==================================================
+  // HOJAS
+  // ==================================================
+
   function drawLeaf(x, y, flip) {
-    const lw = 160 * SCALE; // Largo de la hoja
-    const lh = 50 * SCALE;  // Ancho de la hoja
-    
+    const lw = 160 * SCALE;
+    const lh = 50 * SCALE;
+
     ctx.save();
-    ctx.translate(x, y); // Nos movemos al borde del tallo
-    
-    // Rotación para que la hoja apunte hacia afuera y arriba
+    ctx.translate(x, y);
+
     ctx.rotate(flip ? Math.PI / 6 : -Math.PI / 6);
     if (flip) ctx.scale(-1, 1);
-    
+
     ctx.beginPath();
-    ctx.moveTo(0, 0); // Empieza exactamente en el punto de contacto
+    ctx.moveTo(0, 0);
     ctx.quadraticCurveTo(lw / 2, -lh, lw, 0);
     ctx.quadraticCurveTo(lw / 2, lh, 0, 0);
     ctx.closePath();
-    
+
     ctx.fillStyle = COLORS.LEAF;
     ctx.fill();
     ctx.strokeStyle = STROKE;
     ctx.lineWidth = 2 * SCALE;
     ctx.stroke();
-    
-    // Nervadura central
+
     ctx.beginPath();
     ctx.moveTo(0, 0);
     ctx.lineTo(lw, 0);
     ctx.stroke();
-    
+
     ctx.restore();
   }
 
-  /* --- PÉTALOS EXTERIORES --- */
+  // ==================================================
+  // PÉTALOS EXTERIORES
+  // ==================================================
+
   function drawPetals() {
     angles.forEach(angle => {
       ctx.save();
       ctx.translate(cx, cy);
       ctx.rotate(angle);
-      // Lado Rosa
+
       ctx.save();
-      ctx.beginPath(); ctx.ellipse(0, -PETAL_OFFSET, PETAL_RX, PETAL_RY, 0, 0, Math.PI * 2); ctx.clip();
+      ctx.beginPath(); 
+      ctx.ellipse(0, -PETAL_OFFSET, PETAL_RX, PETAL_RY, 0, 0, Math.PI * 2); 
+      ctx.clip();
       ctx.fillStyle = COLORS.PINK;
       ctx.fillRect(-PETAL_RX - 2, -PETAL_OFFSET - PETAL_RY - 2, PETAL_RX + 2, PETAL_RY * 2 + 4);
       ctx.restore();
-      // Lado Morado
+
       ctx.save();
-      ctx.beginPath(); ctx.ellipse(0, -PETAL_OFFSET, PETAL_RX, PETAL_RY, 0, 0, Math.PI * 2); ctx.clip();
+      ctx.beginPath(); 
+      ctx.ellipse(0, -PETAL_OFFSET, PETAL_RX, PETAL_RY, 0, 0, Math.PI * 2); 
+      ctx.clip();
       ctx.fillStyle = COLORS.PURPLE;
       ctx.fillRect(0, -PETAL_OFFSET - PETAL_RY - 2, PETAL_RX + 2, PETAL_RY * 2 + 4);
       ctx.restore();
+
       ctx.restore();
     });
   }
 
-  /* --- LÍNEAS DE PÉTALOS --- */
+  // ==================================================
+  // LÍNEAS DE PÉTALOS
+  // ==================================================
+
   function drawPetalLines() {
     angles.forEach(angle => {
       ctx.save();
       ctx.translate(cx, cy);
       ctx.rotate(angle);
+
       ctx.beginPath();
       ctx.ellipse(0, -PETAL_OFFSET, PETAL_RX, PETAL_RY, 0, 0, Math.PI * 2);
-      ctx.strokeStyle = STROKE; ctx.lineWidth = SW; ctx.stroke();
+      ctx.strokeStyle = STROKE; 
+      ctx.lineWidth = SW; 
+      ctx.stroke();
+
       ctx.beginPath();
       ctx.moveTo(0, -PETAL_OFFSET - PETAL_RY);
       ctx.lineTo(0, -PETAL_OFFSET + PETAL_RY);
       ctx.stroke();
+
       ctx.restore();
     });
   }
 
-  /* --- PÉTALOS INTERNOS --- */
+  // ==================================================
+  // PÉTALOS INTERNOS
+  // ==================================================
+
   function drawInnerPetals() {
     for (let i = 0; i < PETAL_COUNT; i++) {
       ctx.save();
       ctx.translate(cx, cy);
       ctx.rotate((i * 72 * Math.PI) / 180);
+
       ctx.beginPath();
       ctx.ellipse(0, -75 * SCALE, 75 * SCALE, 85 * SCALE, 0, 0, Math.PI * 2);
       ctx.fillStyle = COLORS.DARK_PINK;
       ctx.fill();
-      ctx.strokeStyle = STROKE; ctx.lineWidth = SW; ctx.stroke();
+      ctx.strokeStyle = STROKE; 
+      ctx.lineWidth = SW; 
+      ctx.stroke();
+
       ctx.restore();
     }
   }
 
-  /* --- CENTRO Y PISTILOS --- */
+  // ==================================================
+  // CENTRO DE LA FLOR (PISTILOS)
+  // ==================================================
+
   function drawStamens() {
     const count = 8;
     const dist = 40 * SCALE;
+
     for (let i = 0; i < count; i++) {
       const a = (i / count) * Math.PI * 2;
       const sx = cx + Math.cos(a) * dist;
       const sy = cy + Math.sin(a) * dist;
-      ctx.beginPath(); ctx.arc(sx, sy, 9 * SCALE, 0, Math.PI * 2);
+
+      ctx.beginPath(); 
+      ctx.arc(sx, sy, 9 * SCALE, 0, Math.PI * 2);
       ctx.fillStyle = i % 2 === 0 ? COLORS.ORANGE : COLORS.YELLOW;
       ctx.fill();
-      ctx.strokeStyle = STROKE; ctx.lineWidth = 1.5 * SCALE; ctx.stroke();
+      ctx.strokeStyle = STROKE; 
+      ctx.lineWidth = 1.5 * SCALE; 
+      ctx.stroke();
     }
+
     ctx.beginPath();
     ctx.ellipse(cx, cy, 18 * SCALE, 26 * SCALE, 0, 0, Math.PI * 2);
     ctx.fillStyle = COLORS.YELLOW;
     ctx.fill();
-    ctx.strokeStyle = STROKE; ctx.lineWidth = SW; ctx.stroke();
+    ctx.strokeStyle = STROKE; 
+    ctx.lineWidth = SW; 
+    ctx.stroke();
   }
 
-  /* --- RENDER --- */
+  // ==================================================
+  // RENDER FINAL
+  // ==================================================
+
   function draw() {
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
     ctx.fillStyle = '#ffffff';
     ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
     drawStem();
-    
-    // DIBUJO DE HOJAS EN LOS LATERALES
-    // Hoja izquierda (cx menos la mitad del ancho del tallo)
+
     drawLeaf(cx - STEM_W/2, leafCalculatedY, false);
-    // Hoja derecha (cx más la mitad del ancho del tallo)
     drawLeaf(cx + STEM_W/2, leafCalculatedY, true);
 
     drawPetals();
